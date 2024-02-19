@@ -10,21 +10,27 @@
     <div class="login-cont">
       <h1>Simple Banking System</h1>
       <h2>Choose Your Portal</h2>
-      <button onclick="openLoginForm('admin')">Admin Portal</button>
-      <button onclick="openLoginForm('teller')">Teller Portal</button>
-      <button onclick="openLoginForm('client')">Client Portal</button>
+      <button id="admin11" onclick="openLoginForm('admin')">
+        Admin Portal
+      </button>
+      <button id="teller11" onclick="openLoginForm('teller')">
+        Teller Portal
+      </button>
+      <button id="client11" onclick="openLoginForm('client')">
+        Client Portal
+      </button>
     </div>
     <!-- Admin Login Form -->
     <div id="adminLoginForm" class="login-form">
       <div class="adminPortal">
         <h2>Admin Portal</h2>
-        <label for="adminUsername">Username:</label><br />
+        <label for="adminUsername">Username:(admin)</label><br />
         <input
           type="text"
           name="adminUsername"
           id="adminUsername"
         /><br /><br />
-        <label for="adminPassword">Password:</label><br />
+        <label for="adminPassword">Password:(admin)</label><br />
         <input
           type="password"
           name="adminPassword"
@@ -108,7 +114,6 @@
       function adminLogin() {
         var username = document.getElementById("adminUsername").value;
         var password = document.getElementById("adminPassword").value;
-
         var isAdmin = adminAccounts.some(function (account) {
           return account.username === username && account.password === password;
         });
@@ -123,13 +128,12 @@
       function tellerLogin() {
         var username = document.getElementById("tellerUsername").value;
         var password = document.getElementById("tellerPassword").value;
-        // Check if the entered username and password match any teller account
+        // check duplicaton
         var isTeller = tellerAccounts.some(function (account) {
           return account.username === username && account.password === password;
         });
         if (isTeller) {
           alert("Login successful! Welcome, Teller.");
-
         } else {
           alert("Invalid username or password. Please try again.");
         }

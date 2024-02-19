@@ -8,12 +8,11 @@
   </head>
   <body>
     <h1>Simple Banking System</h1>
-    <p>Hi! Admin <a href="#">Logout</a></p>
+    <p>Hi! Admin <a href="index.html">Logout</a></p>
     <table>
       <tbody id="adminAccountsTable"></tbody>
     </table>
     <form id="addAdminForm"></form>
-    <!-- Display all teller accounts -->
     <h2>Teller Accounts</h2>
     <table>
       <thead>
@@ -56,7 +55,6 @@
       /><br /><br />
       <button type="submit">Add Teller Account</button>
     </form>
-
     <script>
       // Dummy accounts
       var adminAccounts = [{ username: "admin", password: "admin" }];
@@ -91,7 +89,6 @@
           adminAccountsTable.appendChild(row);
         });
       }
-
       // display teller acct
       function displayTellerAccounts() {
         var tellerAccountsTable = document.getElementById(
@@ -113,7 +110,6 @@
           tellerAccountsTable.appendChild(row);
         });
       }
-
       // add admin
       document
         .getElementById("addAdminForm")
@@ -169,7 +165,6 @@
             displayTellerAccounts(); // Update the table
           }
         });
-
       // edit admin func
       function editAdminAccount(username) {
         var newPassword = prompt("Enter the new password:");
@@ -186,7 +181,6 @@
           }
         }
       }
-
       // edit teller act func
       function editTellerAccount(username) {
         var newPassword = prompt("Enter the new password:");
@@ -203,7 +197,6 @@
           }
         }
       }
-
       // delete admin acct func
       function deleteAdminAccount(username) {
         var confirmDelete = confirm(
@@ -217,7 +210,6 @@
           displayAdminAccounts();
         }
       }
-
       // delete teller acct func
       function deleteTellerAccount(username) {
         var confirmDelete = confirm(
@@ -228,7 +220,7 @@
             return account.username !== username;
           });
           alert("Teller account deleted successfully.");
-          displayTellerAccounts(); 
+          displayTellerAccounts();
         }
       }
       // display updates
