@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Simple Banking System</h1>
+    <p>Hi! Admin <a href="#">Logout</a></p>
+    <table>
+      <tbody id="adminAccountsTable"></tbody>
+    </table>
+    <form id="addAdminForm"></form>
+    <!-- Display all teller accounts -->
+    <h2>Teller Accounts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="tellerAccountsTable"></tbody>
+    </table>
+    <!-- add new teller -->
+    <h2>Add New Teller Account</h2>
+    <form id="addTellerForm">
+      <label for="newTellerFirstName">First Name:</label><br />
+      <input
+        type="text"
+        id="newTellerFirstName"
+        name="newTellerFirstName"
+      /><br />
+      <label for="newTellerLastName">Last Name:</label><br />
+      <input
+        type="text"
+        id="newTellerLastName"
+        name="newTellerLastName"
+      /><br />
+      <label for="newTellerUsername">Username:</label><br />
+      <input
+        type="text"
+        id="newTellerUsername"
+        name="newTellerUsername"
+      /><br />
+      <label for="newTellerPassword">Password:</label><br />
+      <input
+        type="password"
+        id="newTellerPassword"
+        name="newTellerPassword"
+      /><br /><br />
+      <button type="submit">Add Teller Account</button>
+    </form>
+
+    <script>
+      // Dummy accounts
+      var adminAccounts = [{ username: "admin", password: "admin" }];
+      var tellerAccounts = [
+        {
+          firstName: "John",
+          lastName: "Doe",
+          username: "john.doe",
+          password: "john123",
+        },
+        {
+          firstName: "Jane",
+          lastName: "Smith",
+          username: "jane.smith",
+          password: "jane456",
+        },
+      ];
+      // display admin acct
+      function displayAdminAccounts() {
+        var adminAccountsTable = document.getElementById("adminAccountsTable");
+        adminAccountsTable.innerHTML = ""; // Clear existing table content
+        adminAccounts.forEach(function (account) {
+          var row = document.createElement("tr");
+          row.innerHTML = `
+        <td>${account.username}</td>
+        <td>${account.password}</td>
+        <td>
+          <button onclick="editAdminAccount('${account.username}')">Edit</button>
+          <button onclick="deleteAdminAccount('${account.username}')">Delete</button>
+        </td>
+      `;
+          adminAccountsTable.appendChild(row);
+        });
+      }
+
+      // display teller acct
+      function displayTellerAccounts() {
+        var tellerAccountsTable = document.getElementById(
+          "tellerAccountsTable"
+        );
+        tellerAccountsTable.innerHTML = "";
+        tellerAccounts.forEach(function (account) {
+          var row = document.createElement("tr");
+          row.innerHTML = `
+        <td>${account.firstName}</td>
+        <td>${account.lastName}</td>
+        <td>${account.username}</td>
+        <td>${account.password}</td>
+        <td>
+          <button onclick="editTellerAccount('${account.username}')">Edit</button>
+          <button onclick="deleteTellerAccount('${account.username}')">Delete</button>
+        </td>
+      `;
+          tellerAccountsTable.appendChild(row);
+        });
+      }
+
+      // add admin
+      document
+        .getElementById("addAdminForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var newAdminUsername =
+            document.getElementById("newAdminUsername").value;
+          var newAdminPassword =
+            document.getElementById("newAdminPassword").value;
+          // to check if user is alrdy taken
+          var isUsernameTaken = adminAccounts.some(function (account) {
+            return account.username === newAdminUsername;
+          });
+          if (isUsernameTaken) {
+            alert("Username is already taken. Please choose another one.");
+          } else {
+            // Add the new admin account
+            adminAccounts.push({
+              username: newAdminUsername,
+              password: newAdminPassword,
+            });
+            alert("Admin account added successfully.");
+            displayAdminAccounts(); //update table
+          }
+        });
+      // new teller acct
+      document
+        .getElementById("addTellerForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var newTellerFirstName =
+            document.getElementById("newTellerFirstName").value;
+          var newTellerLastName =
+            document.getElementById("newTellerLastName").value;
+          var newTellerUsername =
+            document.getElementById("newTellerUsername").value;
+          var newTellerPassword =
+            document.getElementById("newTellerPassword").value;
+          // check if user is alrdy taken
+          var isUsernameTaken = tellerAccounts.some(function (account) {
+            return account.username === newTellerUsername;
+          });
+          if (isUsernameTaken) {
+            alert("Username is already taken. Please choose another one.");
+          } else {
+            tellerAccounts.push({
+              firstName: newTellerFirstName,
+              lastName: newTellerLastName,
+              username: newTellerUsername,
+              password: newTellerPassword,
+            });
+            alert("Teller account added successfully.");
+            displayTellerAccounts(); // Update the table
+          }
+        });
+
+      // edit admin func
+      function editAdminAccount(username) {
+        var newPassword = prompt("Enter the new password:");
+        if (newPassword !== null) {
+          var accountIndex = adminAccounts.findIndex(function (account) {
+            return account.username === username;
+          });
+          if (accountIndex !== -1) {
+            adminAccounts[accountIndex].password = newPassword;
+            alert("Admin account updated successfully.");
+            displayAdminAccounts();
+          } else {
+            alert("Admin account not found.");
+          }
+        }
+      }
+
+      // edit teller act func
+      function editTellerAccount(username) {
+        var newPassword = prompt("Enter the new password:");
+        if (newPassword !== null) {
+          var accountIndex = tellerAccounts.findIndex(function (account) {
+            return account.username === username;
+          });
+          if (accountIndex !== -1) {
+            tellerAccounts[accountIndex].password = newPassword;
+            alert("Teller account updated successfully.");
+            displayTellerAccounts(); // Update the table
+          } else {
+            alert("Teller account not found.");
+          }
+        }
+      }
+
+      // delete admin acct func
+      function deleteAdminAccount(username) {
+        var confirmDelete = confirm(
+          "Are you sure you want to delete this admin account?"
+        );
+        if (confirmDelete) {
+          adminAccounts = adminAccounts.filter(function (account) {
+            return account.username !== username;
+          });
+          alert("Admin account deleted successfully.");
+          displayAdminAccounts();
+        }
+      }
+
+      // delete teller acct func
+      function deleteTellerAccount(username) {
+        var confirmDelete = confirm(
+          "Are you sure you want to delete this teller account?"
+        );
+        if (confirmDelete) {
+          tellerAccounts = tellerAccounts.filter(function (account) {
+            return account.username !== username;
+          });
+          alert("Teller account deleted successfully.");
+          displayTellerAccounts(); 
+        }
+      }
+      // display updates
+      displayAdminAccounts();
+      displayTellerAccounts();
+    </script>
+  </body>
+</html>

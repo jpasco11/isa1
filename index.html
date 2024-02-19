@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="login-cont">
+      <h1>Simple Banking System</h1>
+      <h2>Choose Your Portal</h2>
+      <button onclick="openLoginForm('admin')">Admin Portal</button>
+      <button onclick="openLoginForm('teller')">Teller Portal</button>
+      <button onclick="openLoginForm('client')">Client Portal</button>
+    </div>
+    <!-- Admin Login Form -->
+    <div id="adminLoginForm" class="login-form">
+      <div class="adminPortal">
+        <h2>Admin Portal</h2>
+        <label for="adminUsername">Username:</label><br />
+        <input
+          type="text"
+          name="adminUsername"
+          id="adminUsername"
+        /><br /><br />
+        <label for="adminPassword">Password:</label><br />
+        <input
+          type="password"
+          name="adminPassword"
+          id="adminPassword"
+        /><br /><br />
+        <button id="adminLogin" onclick="adminLogin()">Login</button>
+        <button onclick="closeLoginForm('admin')">Back</button>
+      </div>
+    </div>
+    <!-- Teller Login Form -->
+    <div id="tellerLoginForm" class="login-form">
+      <div class="tellerPortal">
+        <h2>Teller Portal</h2>
+        <label for="tellerUsername">Username:</label><br />
+        <input
+          type="text"
+          name="tellerUsername"
+          id="tellerUsername"
+        /><br /><br />
+        <label for="tellerPassword">Password:</label><br />
+        <input
+          type="password"
+          name="tellerPassword"
+          id="tellerPassword"
+        /><br /><br />
+        <button id="tellerLogin" onclick="tellerLogin()">Login</button>
+        <button onclick="closeLoginForm('teller')">Back</button>
+      </div>
+    </div>
+    <!-- Client Login Form -->
+    <div id="clientLoginForm" class="login-form">
+      <div class="clientPortal">
+        <h2>Client Portal</h2>
+        <label for="clientUsername">Username:</label><br />
+        <input
+          type="text"
+          name="clientUsername"
+          id="clientUsername"
+        /><br /><br />
+        <label for="clientPassword">Password:</label><br />
+        <input
+          type="password"
+          name="clientPassword"
+          id="clientPassword"
+        /><br /><br />
+        <button id="clientLogin">Login</button>
+        <button onclick="closeLoginForm('client')">Back</button>
+      </div>
+    </div>
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+    <script>
+      // Dummy accounts data
+      var adminAccounts = [{ username: "admin", password: "admin" }];
+      var tellerAccounts = [
+        {
+          firstName: "John",
+          lastName: "Doe",
+          username: "john.doe",
+          password: "john123",
+        },
+        {
+          firstName: "Jane",
+          lastName: "Smith",
+          username: "jane.smith",
+          password: "jane456",
+        },
+      ];
+      var clientAccounts = [{ username: "client", password: "client" }];
+
+      function openLoginForm(userType) {
+        var loginForms = document.querySelectorAll(".login-form");
+        for (var i = 0; i < loginForms.length; i++) {
+          loginForms[i].style.display = "none";
+        }
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById(userType + "LoginForm").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+      }
+      // Admin login function
+      function adminLogin() {
+        var username = document.getElementById("adminUsername").value;
+        var password = document.getElementById("adminPassword").value;
+
+        var isAdmin = adminAccounts.some(function (account) {
+          return account.username === username && account.password === password;
+        });
+        if (isAdmin) {
+          alert("Login successful! Welcome, Admin.");
+          window.location.href = "admin.html";
+        } else {
+          alert("Invalid username or password. Please try again.");
+        }
+      }
+      // Teller login function
+      function tellerLogin() {
+        var username = document.getElementById("tellerUsername").value;
+        var password = document.getElementById("tellerPassword").value;
+        // Check if the entered username and password match any teller account
+        var isTeller = tellerAccounts.some(function (account) {
+          return account.username === username && account.password === password;
+        });
+        if (isTeller) {
+          alert("Login successful! Welcome, Teller.");
+
+        } else {
+          alert("Invalid username or password. Please try again.");
+        }
+      }
+      function closeLoginForm(userType) {
+        document.getElementById(userType + "LoginForm").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
